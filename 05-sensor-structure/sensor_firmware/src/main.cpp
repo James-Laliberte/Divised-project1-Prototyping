@@ -50,28 +50,28 @@ void setup() {
     while (true) { delay(10); }
   }
 
-  digitalWrite(14, HIGH);            // [4] sensor 2 on, still at 0x29
+  digitalWrite(14, HIGH);
   delay(10);
-  if (!sensor2.begin(0x31)) {        // [4] DECISION: move it to 0x31
+  if (!sensor2.begin(0x31)) {
     Serial.println("sensor2 not found");
     while (true) { delay(10); }
   }
 
-  digitalWrite(26, HIGH);            // [4] sensor 3 on, still at 0x29
+  digitalWrite(26, HIGH);
   delay(10);
-  if (!sensor3.begin(0x32)) {        // [4] DECISION: move it to 0x32
+  if (!sensor3.begin(0x32)) {
     Serial.println("sensor3 not found");
     while (true) { delay(10); }
   }
 
-  digitalWrite(13, HIGH);            // [4] sensor 4 on, still at 0x29
+  digitalWrite(13, HIGH);
   delay(10);
-  if (!sensor4.begin(0x33)) {        // [4] DECISION: move it to 0x33
+  if (!sensor4.begin(0x33)) {
     Serial.println("sensor4 not found");
     while (true) { delay(10); }
   }
 
-  sensor1.startRangeContinuous(50);  // [5] SETUP: each sensor reads on its own every 50 ms
+  sensor1.startRangeContinuous(50); 
   sensor2.startRangeContinuous(50);
   sensor3.startRangeContinuous(50);
   sensor4.startRangeContinuous(50);
@@ -80,12 +80,12 @@ void setup() {
 
 void loop() {
 
-  if (sensor1.isRangeComplete()) {                   // [6] DECISION: new reading ready?
-    int sensor1Reading = sensor1.readRangeResult();  // [7] INPUT: collect it, no waiting
-    if (sensor1.readRangeStatus() == 0) {            // [8] DECISION: good reading?
-      distance1 = sensor1Reading;                    // [9] stored
+  if (sensor1.isRangeComplete()) { 
+    int sensor1Reading = sensor1.readRangeResult(); 
+    if (sensor1.readRangeStatus() == 0) {
+      distance1 = sensor1Reading;
     } else {
-      distance1 = -1;                                // [9] out of range
+      distance1 = -1; 
     }
   }
 
@@ -116,7 +116,6 @@ void loop() {
     }
   }
 
-  // [10] DECISION: if no laptop is connected, check for one and start again
   if (!computer || !computer.connected()) {
     computer = server.available();
     if (computer) {
@@ -125,13 +124,11 @@ void loop() {
     return;
   }
 
-  // [11] DECISION: only send every 100 ms
   if (millis() - lastSendTime < 100) {
     return;
   }
   lastSendTime = millis();
 
-  // [12] OUTPUT: send all four readings as one line, e.g. "243,-1,88,512"
   computer.print(distance1);
   computer.print(",");
   computer.print(distance2);
