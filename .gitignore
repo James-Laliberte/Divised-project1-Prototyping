@@ -1,0 +1,15 @@
+# Wi-Fi details
+network-info.h
+
+# ROS 2 build output
+build/
+install/
+log/
+
+# PlatformIO
+.pio/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
